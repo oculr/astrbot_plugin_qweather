@@ -146,13 +146,20 @@ class Main(Star):
         return response, weather_data
 
     @filter.command("天气", alias={"weather"})
-    async def get_weather(self, event: AstrMessageEvent, city: str, param: str|None=None):
-        if not city:
+    async def get_weather(self, event: AstrMessageEvent, args: str = None):
+        if not args:
             yield event.plain_result("⚠️ 请输入正确的指令\n"+HELP_TEXT)
             return
+        args_split = args.split()
+        if not args_split or len(args_split) < 1:
+            yield event.plain_result("⚠️ 请输入正确的指令\n"+HELP_TEXT)
+            return
+        city = args_split[0]
         if city == "help":
             yield event.plain_result(HELP_TEXT)
             return
+
+        param = args_split[1] if len(args_split) > 1 else None
         if param is not None and param not in AVAILABLE_PATH_PARAM:
             yield event.plain_result("⚠️ 时间格式不正确\n"+HELP_TEXT)
             return
@@ -162,13 +169,13 @@ class Main(Star):
         jwt = self._gen_jwt()
         response, location_data = self._get_location(jwt, city)
         if not location_data:
-            logger.error(f"❌ 查询{city}失败: "+str(response))
+            logger.error(f"❌ 查询{city}失败: "+response.text)
             yield event.plain_result(f"❌ {city} 城市错误")
             return
 
         response, weather_data = self._get_weather(jwt, location_data["location_id"], param)
         if not weather_data:
-            logger.error(f"❌ 查询天气失败: {location_data}\n"+str(response))
+            logger.error(f"❌ 查询天气失败: {location_data}\n"+response.text)
             yield event.plain_result(f"❌ 查询{location_data["location"]}天气失败")
             return
 

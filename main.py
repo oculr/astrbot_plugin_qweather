@@ -48,6 +48,8 @@ class Main(Star):
         super().__init__(context)
         # 加载配置文件
         self.config = config
+        self.wake_prefix = [""]
+        self.wake_prefix.extend(self.context.get_config().get('wake_prefix', []))
         # 初始化实例变量
         qweather_api_host = self.config.get("qweather_api_host", "")
         try:
@@ -146,20 +148,18 @@ class Main(Star):
         return response, weather_data
 
     @filter.command("天气", alias={"weather"})
-    async def get_weather(self, event: AstrMessageEvent, args: str = None):
-        if not args:
+    async def get_weather(self, event: AstrMessageEvent):
+        args = event.message_str
+        args_split = args.strip().split()
+        if not args_split or len(args_split) < 2:
             yield event.plain_result("⚠️ 请输入正确的指令\n"+HELP_TEXT)
             return
-        args_split = args.split()
-        if not args_split or len(args_split) < 1:
-            yield event.plain_result("⚠️ 请输入正确的指令\n"+HELP_TEXT)
-            return
-        city = args_split[0]
+        city = args_split[1]
         if city == "help":
             yield event.plain_result(HELP_TEXT)
             return
 
-        param = args_split[1] if len(args_split) > 1 else None
+        param = args_split[2] if len(args_split) > 2 else None
         if param is not None and param not in AVAILABLE_PATH_PARAM:
             yield event.plain_result("⚠️ 时间格式不正确\n"+HELP_TEXT)
             return

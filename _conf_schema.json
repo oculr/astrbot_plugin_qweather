@@ -1,14 +1,26 @@
 {
-    "qweather_api_key": {
+    "qweather_api_host": {
         "type": "string",
-        "description": "和风天气的 API KEY",
-        "hint": "需要在官网获取一个，和风天气控制台：https://console.qweather.com/home?lang=zh",
+        "description": "和风天气开发者独立的API地址",
+        "hint": "申请成为开发者后生成的API Host，和风天气控制台：https://console.qweather.com/home?lang=zh",
         "default": ""
     },
-    "history_access": {
-        "type": "bool",
-        "description": "是否让 AI 结合上下文判断地区名称",
-        "hint": "未完工，当前无效",
-        "default": false
+    "qweather_project_id": {
+        "type": "string",
+        "description": "和风天气项目ID",
+        "hint": "创建项目后生成的项目ID(Project ID)",
+        "default": ""
+    },
+    "qweather_credential_id": {
+        "type": "string",
+        "description": "凭据ID",
+        "hint": "点进项目后的JWT凭据的ID(Credential ID)",
+        "default": ""
+    },
+    "qweather_private_key": {
+        "type": "string",
+        "description": "JWT认证私钥",
+        "hint": "创建JWT凭据时密钥对的私钥，开头是-----BEGIN PRIVATE KEY-----",
+        "default": ""
     }
 }

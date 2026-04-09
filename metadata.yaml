@@ -1,6 +1,6 @@
-name: astrbot_plugin_get_weather_cmd
-desc: 通过简单的指令查询天气：获取12小时的天气并生成一张图片
-help: 见Github页。
-version: v1.0.0
-author: whzc
-repo: https://github.com/whzcc/astrbot_plugin_get_weather_cmd
+name: astrbot_plugin_qweather
+display_name: 和风天气查询
+desc: 基于和风天气API的天气查询插件，支持和风天气jwt认证
+version: v0.0.1
+author: oculr
+repo: https://github.com/oculr/astrbot_plugin_qweather

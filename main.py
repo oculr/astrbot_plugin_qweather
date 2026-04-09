@@ -146,7 +146,7 @@ class Main(Star):
         return response, weather_data
 
     @filter.command("天气", alias={"weather"})
-    async def get_weather(self, event: AstrMessageEvent, city: str, param: str|None):
+    async def get_weather(self, event: AstrMessageEvent, city: str, param: str|None=None):
         if not city:
             yield event.plain_result("⚠️ 请输入正确的指令\n"+HELP_TEXT)
             return
